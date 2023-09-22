@@ -185,7 +185,7 @@ which means everything is working fine
 <h3>Updating User and Deleting user</h3>
 
 - To update/delete user we must target the unique user we want to update/delete.
-- then we must query the user from the db, by filtering using by the target id,
+- then we must query the user from the db, by filtering the target user by the target id,
 
         user_from_db = User.query.filter_by(id=id).first_or_404()
 
@@ -195,9 +195,9 @@ which means everything is working fine
 
 And wahala, you can test your endpoints via postman or fiddler.
 
-Thanks, 😊😊😊😊
+            Thanks, 😊😊😊😊
 
-Created with ❤️ for ❤️
+            Created with ❤️ for ❤️
 
 
     
