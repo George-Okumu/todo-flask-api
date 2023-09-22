@@ -65,6 +65,24 @@ def create_user():
         "email": new_user.email
     }), 201
 
+@app.route('/user/<int:id>')
+def get_single_user(id):
+    user = User.query.filter_by(id = id).first()
+
+    
+
+    if(user):
+        user_found = {
+        "id": user.id,
+        "name": user.name,
+        "email": user.email
+    }
+        return jsonify(user_found), 200
+    else:
+        return jsonify({
+            "message": "User not found on our server"
+        }), 404
+    
 
 @app.route('/update-user/<int:id>', methods=["PUT"])
 def update_user(id):
