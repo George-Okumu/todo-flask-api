@@ -92,3 +92,53 @@ which means everything is working fine
 - Test your users endpoint now, and good you'll have the ``` /users ``` endpoint returning a list of users in json format
 
 
+## Objective 2,  Day 2:
+
+``` - POST /add-user:  Creating new users```
+
+``` - PUT /update-user/id: updating users details```
+
+``` - GET /users/id: Get single user```
+
+``` - DELETE /delete-user/id: Delete an existing user ```
+
+### Posting new user route and method
+<hr>
+<h3>Method 1</h3>
+        
+        @app.route('/add-user', methods=["POST"])
+        def create_user():
+            user = request.get_json()
+
+            new_user = User(
+                name = user['name'],
+                email = user['email']
+            )
+
+            db.session.add(new_user)
+            db.session.commit()
+
+            return jsonify({
+                "id": new_user.id,
+                "name": new_user.name,
+                "email": new_user.email
+            }), 201
+
+<p>In the above method we have a decorator for defining the route, and a method create user</p>
+
+- In the method ``` create-user() ```, we have
+    
+        user = request.get_json()
+    - this line gets the users details that are being added from the front-end and storing it in user object. But the details here must be in json object format.
+
+    - It then assigns the details when creating a new instance of user in this line,
+
+            new_user = User(
+                    name = user['name'],
+                    email = user['email']
+                )
+    - Then we add the user to db and save it using the following line:
+
+            db.session.add(new_user)
+            db.session.commit()
+    - Finally we return a serialized user object that was added, with the help of ```jsonify``` from flask.
