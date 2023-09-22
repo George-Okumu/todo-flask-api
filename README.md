@@ -142,3 +142,62 @@ which means everything is working fine
             db.session.add(new_user)
             db.session.commit()
     - Finally we return a serialized user object that was added, with the help of ```jsonify``` from flask.
+
+<hr>
+
+<h3>Method 2</h2>
+
+    @app.route('/add-user', methods=["POST"])
+    def create_user():
+        new_user = User(
+            name = request.form.get("name"),
+            email = request.form.get("email")
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        resp = {
+            "message": "user created succesfully",
+            "user": {
+            'id': new_user.id,
+            'name': new_user.name,
+            'email': new_user.email
+            }
+        }
+
+        return make_response(
+            jsonify(resp), 201
+        )
+
+ - In the above method we use the form method from flask requests, ``` request.form.get('something from the client form') ```
+ - This grabs the details from client form and assigns them to the instance varibales.
+     
+        new_user = User(
+                name = request.form.get("name"),
+                email = request.form.get("email")
+            )
+    - NOTE: In this method we get the data from the form itself, the type of data to use from the client client should be of form-data type.
+
+
+<hr>
+
+<h3>Updating User and Deleting user</h3>
+
+- To update/delete user we must target the unique user we want to update/delete.
+- then we must query the user from the db, by filtering using by the target id,
+
+        user_from_db = User.query.filter_by(id=id).first_or_404()
+
+- for delete
+
+        user_to_delete = User.query.filter_by(id=id).first()
+
+And wahala, you can test your endpoints via postman or fiddler.
+
+Thanks, 😊😊😊😊
+
+Created with ❤️ for ❤️
+
+
+    
